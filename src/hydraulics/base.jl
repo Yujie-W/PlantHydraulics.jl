@@ -18,7 +18,7 @@ function xylem_p_from_flow(
             hs::LeafHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis, k_element, k_history, p_history, p_ups = hs;
+    @unpack f_st, f_vis, k_element, k_history, p_history, p_ups, vc = hs;
 
     p_end::FT = p_ups;
 
@@ -26,7 +26,7 @@ function xylem_p_from_flow(
     for (_k, _kh, _ph) in zip(k_element, k_history, p_history)
         p_25 = p_end / f_st;
         if p_25 < _ph
-            k = weibull_k_ratio(b, c, p_25, f_vis) * _k;
+            k = xylem_k_ratio(vc, p_25, f_vis) * _k;
         else
             k = _kh * _k;
         end
@@ -40,8 +40,8 @@ function xylem_p_from_flow(
             hs::RootHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis, k_element, k_history, k_rhiz, p_gravity,
-            p_history, p_ups, soil_α, soil_m, soil_n = hs;
+    @unpack f_st, f_vis, k_element, k_history, k_rhiz, p_gravity, p_history,
+            p_ups, soil_α, soil_m, soil_n, vc = hs;
 
     # make sure that p_ups is not p_25 and then convert
     p_end::FT = p_ups;
@@ -64,7 +64,7 @@ function xylem_p_from_flow(
     for (_k, _kh, _pg, _ph) in zip(k_element, k_history, p_gravity, p_history)
         p_25 = p_end / f_st;
         if p_25 < _ph
-            k = weibull_k_ratio(b, c, p_25, f_vis) * _k;
+            k = xylem_k_ratio(vc, p_25, f_vis) * _k;
         else
             k = _kh * _k;
         end
@@ -78,8 +78,8 @@ function xylem_p_from_flow(
             hs::StemHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis, k_element, k_history, p_gravity, p_history,
-            p_ups = hs;
+    @unpack f_st, f_vis, k_element, k_history, p_gravity, p_history, p_ups,
+            vc = hs;
 
     p_end::FT = p_ups;
 
@@ -87,7 +87,7 @@ function xylem_p_from_flow(
     for (_k, _kh, _pg, _ph) in zip(k_element, k_history, p_gravity, p_history)
         p_25 = p_end / f_st;
         if p_25 < _ph
-            k = weibull_k_ratio(b, c, p_25, f_vis) * _k;
+            k = xylem_k_ratio(vc, p_25, f_vis) * _k;
         else
             k = _kh * _k;
         end
@@ -120,7 +120,7 @@ function hydraulic_p_profile!(
             hs::LeafHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, k_element, k_history, p_history, p_ups, f_st, f_vis = hs;
+    @unpack k_element, k_history, p_history, p_ups, f_st, f_vis, vc = hs;
 
     p_end::FT = p_ups;
 
@@ -129,7 +129,7 @@ function hydraulic_p_profile!(
         # update history first
         p_25 = p_end / f_st;
         if p_25 < p_history[i]
-            _kr = weibull_k_ratio(b, c, p_25, f_vis);
+            _kr = xylem_k_ratio(vc, p_25, f_vis);
             hs.p_history[i] = p_25;
             hs.k_history[i] = _kr;
             k = _kr * k_element[i];
@@ -153,8 +153,8 @@ function hydraulic_p_profile!(
             hs::RootHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis, k_element, k_history, k_rhiz, p_gravity,
-            p_history, p_ups, soil_α, soil_m, soil_n = hs;
+    @unpack f_st, f_vis, k_element, k_history, k_rhiz, p_gravity, p_history,
+            p_ups, soil_α, soil_m, soil_n, vc = hs;
 
     # make sure that p_ups is not p_25 and then convert
     p_end::FT = p_ups;
@@ -178,7 +178,7 @@ function hydraulic_p_profile!(
         # update history first
         p_25 = p_end / f_st;
         if p_25 < p_history[i]
-            _kr = weibull_k_ratio(b, c, p_25, f_vis);
+            _kr = xylem_k_ratio(vc, p_25, f_vis);
             hs.p_history[i] = p_25;
             hs.k_history[i] = _kr;
             k = _kr * k_element[i];
@@ -201,8 +201,8 @@ function hydraulic_p_profile!(
             hs::StemHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis, k_element, k_history, p_gravity, p_history,
-            p_ups = hs;
+    @unpack f_st, f_vis, k_element, k_history, p_gravity, p_history, p_ups,
+            vc = hs;
 
     p_end::FT = p_ups;
 
@@ -211,7 +211,7 @@ function hydraulic_p_profile!(
         # update history first
         p_25 = p_end / f_st;
         if p_25 < p_history[i]
-            _kr = weibull_k_ratio(b, c, p_25, f_vis);
+            _kr = xylem_k_ratio(vc, p_25, f_vis);
             hs.p_history[i] = p_25;
             hs.k_history[i] = _kr;
             k = _kr * k_element[i];

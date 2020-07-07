@@ -53,6 +53,7 @@ export create_grass_like_hs,
 
 
 
+include("types/vulnerability.jl"   )
 include("types/hydraulics_organ.jl")
 include("types/hydraulics_plant.jl")
 include("types/initialize_plant.jl")

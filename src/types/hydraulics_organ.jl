@@ -31,16 +31,14 @@ $(DocStringExtensions.FIELDS)
 """
 Base.@kwdef mutable struct LeafHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem
     # leaf hydraulic parameters
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter B `[MPa]`"
-    b    ::FT = FT(2.0)
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter C"
-    c    ::FT = FT(5.0)
     "Maximal extra-xylary hydraulic conductance `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_ox ::FT = FT(100)
     "Maximal leaf hydraulic conductance per leaf area `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_sla::FT = FT(0.1)
+    "Vulnerability curve"
+    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
     "Critical xylem pressure `[MPa]`"
-    p_crt::FT = -b * log(FT(1e6)) ^ (1/c)
+    p_crt::FT = -vc.b * log(FT(1e6)) ^ (1/vc.c)
 
     # flows and pressures (need to be updated with time)
     "Flow rate in the xylem `[mol s⁻¹]`"
@@ -86,14 +84,12 @@ Base.@kwdef mutable struct RootHydraulics{FT<:AbstractFloat} <: AbstractHydrauli
     # root hydraulic parameters
     "Root cross-section area `[m²]`"
     area ::FT = FT(0.02)
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter B `[MPa]`"
-    b    ::FT = FT(2.0)
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter C"
-    c    ::FT = FT(5.0)
     "Maximal hydraulic conductance `[mol s⁻¹ MPa⁻¹]`"
     k_max::FT = FT(0.5)
     "Maximal xylem hydraulic conductivity `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_s  ::FT = FT(250)
+    "Vulnerability curve"
+    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
     "Root z difference `[m]`"
     Δh   ::FT = FT(1.0)
 
@@ -155,14 +151,12 @@ Base.@kwdef mutable struct StemHydraulics{FT<:AbstractFloat} <: AbstractHydrauli
     # stem hydraulic parameters
     "Stem cross-section area `[m²]`"
     area ::FT = FT(0.1)
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter B `[MPa]`"
-    b    ::FT = FT(2.0)
-    "Weibull function (`k = k_max * exp( -(-p/B)^C )`) parameter C"
-    c    ::FT = FT(5.0)
     "Maximal hydraulic conductance `[mol s⁻¹ MPa⁻¹]`"
     k_max::FT = FT(5.0)
     "Maximal xylem hydraulic conductivity `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_s  ::FT = FT(250)
+    "Vulnerability curve"
+    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
     "Stem height difference `[m]`"
     Δh   ::FT = FT(5.0)
 

@@ -14,10 +14,10 @@ function leaf_xylem_risk(
             hs::LeafHydraulics{FT},
             flow::FT
             ) where {FT<:AbstractFloat}
-    @unpack b, c, f_st, f_vis = hs;
+    @unpack f_st, f_vis, vc = hs;
 
     p_25 = xylem_p_from_flow(hs, flow) / hs.f_st;
-    k_25 = weibull_k_ratio(b, c, p_25, f_vis);
+    k_25 = xylem_k_ratio(vc, p_25, f_vis);
 
     return k_25
 end
