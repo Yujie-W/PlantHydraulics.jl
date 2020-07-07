@@ -21,4 +21,6 @@ root_qs_p_from_q
 hydraulic_p_profile!
 leaf_xylem_risk
 leaf_e_crit
+tree_p_from_flow
+tree_e_crit
 ```
