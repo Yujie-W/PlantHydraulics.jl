@@ -9,27 +9,27 @@
 ---> StemHydraulics
 =#
 """
-    type AbstractHydraulicSystem
+    abstract type AbstractHydraulicSystem{FT}
 
 Hierarchy of AbstractHydraulicSystem
 - [`LeafHydraulics`](@ref)
 - [`RootHydraulics`](@ref)
 - [`StemHydraulics`](@ref)
 """
-abstract type AbstractHydraulicSystem end
+abstract type AbstractHydraulicSystem{FT} end
 
 
 
 
 """
-    struct LeafHydraulics{FT<:AbstractFloat}
+    mutable struct LeafHydraulics{FT<:AbstractFloat}
 
 A struct that contains leaf hydraulics information.
 
 # Fields
 $(DocStringExtensions.FIELDS)
 """
-Base.@kwdef mutable struct LeafHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem
+Base.@kwdef mutable struct LeafHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem{FT}
     # leaf hydraulic parameters
     "Maximal extra-xylary hydraulic conductance `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_ox ::FT = FT(100)
@@ -73,14 +73,14 @@ end
 
 
 """
-    struct RootHydraulics{FT<:AbstractFloat}
+    mutable struct RootHydraulics{FT<:AbstractFloat}
 
 A struct that contains root hydraulics information.
 
 # Fields
 $(DocStringExtensions.FIELDS)
 """
-Base.@kwdef mutable struct RootHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem
+Base.@kwdef mutable struct RootHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem{FT}
     # root hydraulic parameters
     "Root cross-section area `[m²]`"
     area ::FT = FT(0.02)
@@ -140,14 +140,14 @@ end
 
 
 """
-    struct StemHydraulics{FT<:AbstractFloat}
+    mutable struct StemHydraulics{FT<:AbstractFloat}
 
 A struct that contains stem hydraulics information.
 
 # Fields
 $(DocStringExtensions.FIELDS)
 """
-Base.@kwdef mutable struct StemHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem
+Base.@kwdef mutable struct StemHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem{FT}
     # stem hydraulic parameters
     "Stem cross-section area `[m²]`"
     area ::FT = FT(0.1)

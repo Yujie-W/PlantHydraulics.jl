@@ -4,10 +4,13 @@
 #
 ###############################################################################
 """
-    xylem_p_from_flow(hs::LeafHydraulics{FT}, flow::FT)
+    xylem_p_from_flow(hs::LeafHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
+    xylem_p_from_flow(hs::RootHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
+    xylem_p_from_flow(hs::StemHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
 
 Return the xylen end pressure from flow rate, given
-- `hs` [`AbstractHydraulicSystem`](@ref) type struct
+- `hs` [`LeafHydraulics`](@ref) or [`RootHydraulics`](@ref) or
+    [`StemHydraulics`](@ref) type struct
 - `flow` Flow rate (per leaf area)
 
 Note, gravity is accounted for in root and stem; rhizosphere conductance is
@@ -17,7 +20,7 @@ Note, gravity is accounted for in root and stem; rhizosphere conductance is
 function xylem_p_from_flow(
             hs::LeafHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, k_element, k_history, p_history, p_ups, vc = hs;
 
     p_end::FT = p_ups;
@@ -36,10 +39,13 @@ function xylem_p_from_flow(
     return p_end
 end
 
+
+
+
 function xylem_p_from_flow(
             hs::RootHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, k_element, k_history, k_rhiz, p_gravity, p_history,
             p_ups, soil_α, soil_m, soil_n, vc = hs;
 
@@ -74,10 +80,13 @@ function xylem_p_from_flow(
     return p_end
 end
 
+
+
+
 function xylem_p_from_flow(
             hs::StemHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, k_element, k_history, p_gravity, p_history, p_ups,
             vc = hs;
 
@@ -96,7 +105,7 @@ function xylem_p_from_flow(
 
     return p_end
 end
- 
+
 
 
 
@@ -110,16 +119,19 @@ end
 #
 ###############################################################################
 """
-    hydraulic_p_profile!(hs::LeafHydraulics{FT}, flow::FT)
+    hydraulic_p_profile!(hs::LeafHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
+    hydraulic_p_profile!(hs::RootHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
+    hydraulic_p_profile!(hs::StemHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
 
 Update the pressure profile, given
-- `hs` [`AbstractHydraulicSystem`](@ref) type struct
+- `hs` [`LeafHydraulics`](@ref) or [`RootHydraulics`](@ref) or
+    [`StemHydraulics`](@ref) type struct
 - `flow` Flow rate (per leaf area)
 """
 function hydraulic_p_profile!(
             hs::LeafHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack k_element, k_history, p_history, p_ups, f_st, f_vis, vc = hs;
 
     p_end::FT = p_ups;
@@ -149,10 +161,13 @@ function hydraulic_p_profile!(
     return nothing
 end
 
+
+
+
 function hydraulic_p_profile!(
             hs::RootHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, k_element, k_history, k_rhiz, p_gravity, p_history,
             p_ups, soil_α, soil_m, soil_n, vc = hs;
 
@@ -197,10 +212,13 @@ function hydraulic_p_profile!(
     return nothing
 end
 
+
+
+
 function hydraulic_p_profile!(
             hs::StemHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, k_element, k_history, p_gravity, p_history, p_ups,
             vc = hs;
 

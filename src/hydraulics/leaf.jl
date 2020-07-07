@@ -4,16 +4,16 @@
 #
 ###############################################################################
 """
-    leaf_xylem_risk(hs::LeafHydraulics{FT}, flow::FT)
+    leaf_xylem_risk(hs::LeafHydraulics{FT}, flow::FT) where {FT<:AbstractFloat}
 
 Evaluate the hydraulic risk at the end of leaf xylem, given
-- `hs` [`AbstractHydraulicSystem`](@ref) type struct
+- `hs` [`LeafHydraulics`](@ref) type struct
 - `flow` Flow rate (per leaf area)
 """
 function leaf_xylem_risk(
             hs::LeafHydraulics{FT},
             flow::FT
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     @unpack f_st, f_vis, vc = hs;
 
     p_25 = xylem_p_from_flow(hs, flow) / hs.f_st;
@@ -35,17 +35,18 @@ end
 #
 ###############################################################################
 """
-    leaf_e_crit(hs::LeafHydraulics{FT})
+    leaf_e_crit(hs::LeafHydraulics{FT}, ini::FT) where {FT<:AbstractFloat}
 
 Calculate the critical flow rate (K ≈ 0), given
-- `hs` [`AbstractHydraulicSystem`](@ref) type struct
+- `hs` [`LeafHydraulics`](@ref) type struct
+- `ini` Initial guess
 
 Note, for the safety of no NaN, update e_crit when ΔP >= -0.01
 """
 function leaf_e_crit(
             hs::LeafHydraulics{FT},
             ini::FT = FT(0.5)
-            ) where {FT<:AbstractFloat}
+) where {FT<:AbstractFloat}
     # calculate maximal flow
     _fh     = (hs.p_ups - hs.p_crt) * hs.k_sla / hs.f_vis;
     _fl     = FT(0);

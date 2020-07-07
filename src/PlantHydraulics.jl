@@ -47,7 +47,7 @@ export create_grass_like_hs,
        root_qs_p_from_q,
        tree_e_crit,
        tree_p_from_flow,
-       weibull_k_ratio,
+       xylem_k_ratio,
        xylem_p_from_flow
 
 

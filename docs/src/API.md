@@ -3,13 +3,28 @@
 CurrentModule = PlantHydraulics
 ```
 
-## Structs
-### Individual hydraulics system
+## Structures
+Plant hydraulics is segmented to three organ-level systems/structs ([`LeafHydraulics`](@ref), [`RootHydraulics](@ref), and [`StemHydraulics`](@ref)) subject to an Abstract type (`AbstractHydraulicsSystem`). The major differences among the three structs are
+- There is an extra-xylary component in [`LeafHydraulics`](@ref)
+- There is a rhizosphere component in the [`RootHydraulics`](@ref)
+- There is a gravity component in [`RootHydraulics](@ref) and [`StemHydraulics`](@ref)
+
+See the documentation for each struct for more details:
 ```@docs
 AbstractHydraulicSystem
 LeafHydraulics
 RootHydraulics
 StemHydraulics
+```
+
+To initialize a hydraulics system, one needs to provide the floating type, for example:
+```julia
+using PlantHydraulics
+
+FT = Float32;
+hs_leaf = LeafHydraulics{FT}();
+hs_root = RootHydraulics{FT}();
+hs_stem = StemHydraulics{FT}();
 ```
 
 ### Plant hydraulics system
