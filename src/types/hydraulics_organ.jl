@@ -31,12 +31,14 @@ $(DocStringExtensions.FIELDS)
 """
 Base.@kwdef mutable struct LeafHydraulics{FT<:AbstractFloat} <: AbstractHydraulicSystem{FT}
     # leaf hydraulic parameters
+    "Leaf area `[m²]`"
+    area ::FT = FT(150)
     "Maximal extra-xylary hydraulic conductance `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_ox ::FT = FT(100)
     "Maximal leaf hydraulic conductance per leaf area `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_sla::FT = FT(0.1)
     "Vulnerability curve"
-    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
+    vc::AbstractVulnerability{FT} = WeibullSingle{FT}()
     "Critical xylem pressure `[MPa]`"
     p_crt::FT = -vc.b * log(FT(1e6)) ^ (1/vc.c)
 
@@ -89,7 +91,7 @@ Base.@kwdef mutable struct RootHydraulics{FT<:AbstractFloat} <: AbstractHydrauli
     "Maximal xylem hydraulic conductivity `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_s  ::FT = FT(250)
     "Vulnerability curve"
-    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
+    vc::AbstractVulnerability{FT} = WeibullSingle{FT}()
     "Root z difference `[m]`"
     Δh   ::FT = FT(1.0)
 
@@ -156,7 +158,7 @@ Base.@kwdef mutable struct StemHydraulics{FT<:AbstractFloat} <: AbstractHydrauli
     "Maximal xylem hydraulic conductivity `[mol s⁻¹ MPa⁻¹ m⁻²]`"
     k_s  ::FT = FT(250)
     "Vulnerability curve"
-    vc::AbstractVulnerability{FT} = WeiullSingle{FT}()
+    vc::AbstractVulnerability{FT} = WeibullSingle{FT}()
     "Stem height difference `[m]`"
     Δh   ::FT = FT(5.0)
 

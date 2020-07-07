@@ -17,7 +17,7 @@ abstract type AbstractPlantHS{FT} end
 
 
 """
-    mutable struct GrassLikeHS{FT}
+    mutable struct GrassLikeHS{FT<:AbstractFloat}
 
 A plant hydraulic system like a grass, which contains multiple root layers, and
 multiple canopy layers. No trunk or branch system applies.
@@ -49,7 +49,7 @@ end
 
 
 """
-    mutable struct PalmLikeHS{FT}
+    mutable struct PalmLikeHS{FT<:AbstractFloat}
 
 A plant hydraulic system like a palm, which contains multiple root layers, one
 trunk, and multiple canopy layers. No branch system applies.
@@ -83,7 +83,7 @@ end
 
 
 """
-    mutable struct TreeLikeHS{FT}
+    mutable struct TreeLikeHS{FT<:AbstractFloat}
 
 A plant hydraulic system like a tree, which contains multiple root layers, one
 trunk, and multiple branch and canopy layers.

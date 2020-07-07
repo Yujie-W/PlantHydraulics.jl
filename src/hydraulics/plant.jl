@@ -17,22 +17,25 @@ function tree_p_from_flow(
             tree::GrassLikeHS{FT},
             flow::FT
 ) where {FT<:AbstractFloat}
+    # Total leaf area
+    tla = sum([tree.leaves[i].area for i in 1:tree.n_canopy])
+
     if tree.n_root == tree.n_canopy == 1
         # calculate the p_dos for roots
         p_dos = xylem_p_from_flow(tree.roots[1], flow);
         tree.leaves[1].p_ups = p_dos;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     elseif tree.n_canopy == 1
         # calculate the p_dos for roots
         _qs,_p = root_qs_p_from_q(tree.roots, flow, (tree.leaves[1]).p_ups);
-        tree.leaves[1].p_ups = p_dos;
+        tree.leaves[1].p_ups = _p;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     else
@@ -48,6 +51,9 @@ function tree_p_from_flow(
             tree::PalmLikeHS{FT},
             flow::FT
 ) where {FT<:AbstractFloat}
+    # Total leaf area
+    tla = sum([tree.leaves[i].area for i in 1:tree.n_canopy])
+
     if tree.n_root == tree.n_canopy == 1
         # calculate the p_dos for roots
         p_dos = xylem_p_from_flow(tree.roots[1], flow);
@@ -58,7 +64,7 @@ function tree_p_from_flow(
         tree.leaves[1].p_ups = p_dos;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     elseif tree.n_canopy == 1
@@ -71,7 +77,7 @@ function tree_p_from_flow(
         tree.leaves[1].p_ups = p_dos;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     else
@@ -87,6 +93,9 @@ function tree_p_from_flow(
             tree::TreeLikeHS{FT},
             flow::FT
 ) where {FT<:AbstractFloat}
+    # Total leaf area
+    tla = sum([tree.leaves[i].area for i in 1:tree.n_canopy])
+
     if tree.n_root == tree.n_canopy == 1
         # calculate the p_dos for roots
         p_dos = xylem_p_from_flow(tree.roots[1], flow);
@@ -101,7 +110,7 @@ function tree_p_from_flow(
         tree.leaves[1].p_ups = p_dos;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     elseif tree.n_canopy == 1
@@ -118,7 +127,7 @@ function tree_p_from_flow(
         tree.leaves[1].p_ups = p_dos;
 
         # calculate the p_dos for leaves
-        p_dos = xylem_p_from_flow(tree.leaves[1], flow);
+        p_dos = xylem_p_from_flow(tree.leaves[1], flow/tla);
 
         return p_dos
     else

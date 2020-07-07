@@ -34,7 +34,10 @@ export AbstractHydraulicSystem,
        AbstractPlantHS,
        GrassLikeHS,
        PalmLikeHS,
-       TreeLikeHS
+       TreeLikeHS,
+       AbstractVulnerability,
+       WeibullDual,
+       WeibullSingle
 
 # export public functions
 export create_grass_like_hs,
