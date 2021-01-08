@@ -11,7 +11,7 @@ Hs    = Ts ./ 3600;
 Rs    = (Hs .- 6) ./ 24 .* FT(2π);
 Es    = max.(FT(5e-4), sin.(Rs) ./ 100);
 
-grass = create_grass_like_hs(FT(-3),FT(6),FT[0,-1,-2,-3],FT[0,1,2,3,4,5,6]);
+grass = create_grass(FT(-3),FT(6),FT[0,-1,-2,-3],FT[0,1,2,3,4,5,6]);
 LWCs  = similar(Es);
 for i in eachindex(Es)
     # update evaporation rate
@@ -43,7 +43,7 @@ _bx1.set_ylabel("Grass canopy water content (mol)", color="royalblue");
 _fig.set_tight_layout(true);
 _fig
 
-tree = create_tree_like_hs(FT(-2.1), FT(5.4), FT(8), FT[0,-1,-2,-3],
+tree = create_tree(FT(-2.1), FT(5.4), FT(8), FT[0,-1,-2,-3],
                            collect(FT,0:1:20));
 LWCs = similar(Es);
 for i in eachindex(Es)
@@ -76,7 +76,7 @@ _bx1.set_ylabel("Tree canopy water content (mol)", color="royalblue");
 _fig.set_tight_layout(true);
 _fig
 
-grass = create_grass_like_hs(FT(-3),FT(6),FT[0,-1,-2,-3],FT[0,1,2,3,4,5,6]);
+grass = create_grass(FT(-3),FT(6),FT[0,-1,-2,-3],FT[0,1,2,3,4,5,6]);
 for root in grass.roots
     root.p_ups = -1.0;
 end
