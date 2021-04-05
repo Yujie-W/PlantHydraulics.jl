@@ -11,8 +11,10 @@ _STS = ["Sand", "Loamy Sand", "Sandy Loam", "Loam", "Sandy Clay Loam",
         "Silty Clay", "Clay"];
 
 function compare_soil_vc(sn::Int)
-    _bc  = create_soil_VC(_sh1, _STS[sn]);
-    _vg  = create_soil_VC(_sh2, _STS[sn]);
+    _bc = create_soil_VC(_sh1, _STS[sn]);
+    _vg = create_soil_VC(_sh2, _STS[sn]);
+    @show _bc.b, _bc.ϕs;
+
     _fig,_axes = create_canvas(_STS[sn]; ncol=2);
     _ax1,_ax2  = _axes;
 
@@ -35,29 +37,29 @@ function compare_soil_vc(sn::Int)
     return _fig
 end
 
-compare_soil_vc(1);
+compare_soil_vc(1)
 
-compare_soil_vc(2);
+compare_soil_vc(2)
 
-compare_soil_vc(3);
+compare_soil_vc(3)
 
-compare_soil_vc(4);
+compare_soil_vc(4)
 
-compare_soil_vc(5);
+compare_soil_vc(5)
 
-compare_soil_vc(6);
+compare_soil_vc(6)
 
-compare_soil_vc(7);
+compare_soil_vc(7)
 
-compare_soil_vc(8);
+compare_soil_vc(8)
 
-compare_soil_vc(9);
+compare_soil_vc(9)
 
-compare_soil_vc(10);
+compare_soil_vc(10)
 
-compare_soil_vc(11);
+compare_soil_vc(11)
 
-compare_soil_vc(12);
+compare_soil_vc(12)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
