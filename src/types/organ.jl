@@ -121,7 +121,7 @@ Base.@kwdef mutable struct RootHydraulics{FT} <: AbstractHydraulicOrgan{FT}
     "Rhizosphere  conductance `[mol s⁻¹ MPa⁻¹]`"
     k_rhiz   ::FT     = FT(5e14)
     "Soil hydraulics"
-    sh::AbstractSoilVC{FT} = BrooksCorey{FT}()
+    sh::Union{BrooksCorey{FT}, VanGenuchten{FT}} = BrooksCorey{FT}()
 
     # flows and pressures (need to be updated with time)
     "Flow rate in the xylem `[mol s⁻¹]`"
